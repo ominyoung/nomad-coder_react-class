@@ -17,9 +17,12 @@
       // const counter = data[0];
       // const modifier = data[1];
       const [counter, modifier] = React.useState(0);
+      const onclick = () => {
+        modifier(counter + 1);
+      }
       return (<div>
         <h3>total clicks: {counter}</h3>
-        <button>Click me!</button>
+        <button onClick={onclick}>Click me!</button>
       </div>)
     };
     ReactDOM.render(<App/>, root);
