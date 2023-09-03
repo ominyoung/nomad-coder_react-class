@@ -8,6 +8,7 @@ interface IFORM {
     username: string;
     password: string;
     password1: string;
+    extraError?: string;
 }
 function ToDoList() {
     const {register,handleSubmit,
@@ -15,9 +16,11 @@ function ToDoList() {
         {defaultValues: { email: "@naver.com"},});
     const onValid = (data: any) => {
        if(data.password !== data.password1) {
-           setError("password1", {message: "password is not same."});
+           setError("password1", {message: "password is not same."}, {shouldFocus: true});
        }
+       setError("extraError", {message: "extra error."});
     }
+
     return (
         <div>
             <form onSubmit={handleSubmit(onValid)}>
@@ -29,7 +32,13 @@ function ToDoList() {
                     },
                 })} placeholder="Email" />
                 <span>{errors?.email?.message?.toString()}</span>
-                <input {...register("firstName", {required:"write here."})} placeholder="First Name" />
+                <input {...register("firstName", {
+                    required:"write here.",
+                    validate: {
+                       noMy : (value) => value.includes("my") ? "no my is allowed" : true,
+                       noMj : (value) => value.includes("mj") ? "no mj is allowed" : true,
+                    }
+                })} placeholder="First Name" />
                 <span>{errors?.firstName?.message?.toString()}</span>
                 <input {...register("lastName", {required:"write here."})} placeholder="Last Name" />
                 <span>{errors?.lastName?.message?.toString()}</span>
@@ -46,6 +55,7 @@ function ToDoList() {
                 })} placeholder="Password1" />
                 <span>{errors?.password1?.message?.toString()}</span>
                 <button>Add</button>
+                <span>{errors?.extraError?.message?.toString()}</span>
             </form>
         </div>
     );
