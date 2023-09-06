@@ -10,7 +10,7 @@ interface IFORM {
     password1: string;
     extraError?: string;
 }
-function ToDoList() {
+function Membership() {
     const {register,handleSubmit,
         formState:{errors}, setError} = useForm<IFORM>(
         {defaultValues: { email: "@naver.com"},});
@@ -61,4 +61,4 @@ function ToDoList() {
     );
 }
 
-export default ToDoList;
+export default Membership;
